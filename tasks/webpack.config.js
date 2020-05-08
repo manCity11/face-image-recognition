@@ -1,7 +1,8 @@
 module.exports = () => {
   const webpack = require('webpack');
   const path = require('path');
-  const { src, port } = require('./build-config');
+  const CopyWebpackPlugin = require('copy-webpack-plugin');
+  const { src, dest, port } = require('./build-config');
 
   const indexHtml = require('./webpack-loaders/indexHtml')();
   const scriptLoader = require('./webpack-loaders/script-loader')();
@@ -11,7 +12,7 @@ module.exports = () => {
     mode: 'development',
     entry: src.entries,
     output: {
-      path: path.resolve(__dirname, '../dist'),
+      path: dest.distPath,
       filename: 'bundle.js',
     },
     module: {
@@ -20,19 +21,46 @@ module.exports = () => {
     resolve: {
       extensions: ['.js', '.jsx'],
       alias: {
-        // put alias here
+        commons: path.resolve(__dirname, '../src/app/commons'),
       },
     },
+    devtool: false, // for sourceMap
     plugins: [
       indexHtml,
       new webpack.HotModuleReplacementPlugin(),
 
       new webpack.ProvidePlugin({
         _: 'lodash',
+        'face-api.js': 'face-api.js',
+      }),
+
+      new CopyWebpackPlugin([
+        {
+          from: path.resolve(__dirname, '../src/recognition-models'),
+          to: 'recognition-models',
+        },
+      ]),
+
+      new CopyWebpackPlugin([
+        {
+          from: path.resolve(__dirname, '../src/labeled-images'),
+          to: 'labeled-images',
+        },
+      ]),
+
+      new webpack.SourceMapDevToolPlugin({
+        test: [/\.js$/],
+        columns: false,
+        exclude: /vendors/,
+        moduleFilenameTemplate: '[resource-path]',
+        fallbackModuleFilenameTemplate: '[resource-path]',
       }),
     ],
     devServer: {
       port,
+    },
+    node: {
+      fs: 'empty',
     },
   };
 

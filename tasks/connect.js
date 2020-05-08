@@ -3,7 +3,7 @@ module.exports = () => {
   const serve = require('browser-sync');
   const webpackDevMiddelware = require('webpack-dev-middleware');
   const webpackHotMiddelware = require('webpack-hot-middleware');
-  const historyApiFallback = require('connect-history-api-fallback');
+  // const historyApiFallback = require('connect-history-api-fallback'); // remove because can't fetch models
   const colorsSupported = require('supports-color');
   const { port } = require('./build-config');
   const config = require('./webpack.config')();
@@ -31,9 +31,9 @@ module.exports = () => {
       baseDir: 'dist/root',
     },
     middleware: [
-      historyApiFallback({
-        index: '/index.html',
-      }),
+      // historyApiFallback({
+      //   index: '/index.html',
+      // }),
       webpackDevMiddelware(global.compiler, {
         hot: true,
         stats: {

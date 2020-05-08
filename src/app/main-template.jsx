@@ -1,5 +1,7 @@
 import React from 'react';
 
-export const MainTemplate = () => (
-  <div>It works!!</div>
-);
+import { FileSelect } from 'commons/file-select/file-select.component';
+
+import './main-template.scss';
+
+export const MainTemplate = () => <FileSelect />;

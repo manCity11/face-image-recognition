@@ -7,7 +7,18 @@
     "global-require": "off",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "react/require-default-props": "off",
+    "react/destructuring-assignment": "off",
+    "class-methods-use-this": "off",
+    "react/jsx-fragments": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 150,
+        "ignoreComments": true
+      }
+    ],
   },
   "globals": {
     "_": true,

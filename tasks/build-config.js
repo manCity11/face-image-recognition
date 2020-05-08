@@ -13,7 +13,6 @@ module.exports = {
   dest: {
     distPath: path.resolve(__dirname, '../dist/root'),
     tmp: '.tmp',
-    locales: 'dist',
   },
   output: {
     publicPath: '/',
